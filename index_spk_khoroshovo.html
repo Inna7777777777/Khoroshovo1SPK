@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПК Хорошово-1</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to top, #a0d8f1, #e0f7ff);
+        }
+        .sky {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(to top, #87ceeb, #ffffff);
+        }
+        .cloud {
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0.9;
+            animation: floatClouds 60s linear infinite;
+        }
+        .cloud1 {
+            width: 200px; height: 100px;
+            top: 50px; left: -250px;
+            animation-delay: 0s;
+        }
+        .cloud2 {
+            width: 150px; height: 75px;
+            top: 120px; left: -200px;
+            animation-delay: 10s;
+        }
+        .cloud3 {
+            width: 250px; height: 120px;
+            top: 200px; left: -300px;
+            animation-delay: 20s;
+        }
+
+        @keyframes floatClouds {
+            0% {transform: translateX(0);}
+            100% {transform: translateX(200vw);}
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            top: 30%;
+            transform: translateY(-30%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .logo {
+            max-width: 150px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #f0a800;
+            text-shadow: 2px 2px 4px #fff;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .enter-btn {
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: #f0a800;
+            color: white;
+            border: none;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 2px 2px 6px #999;
+            transition: background 0.3s;
+        }
+
+        .enter-btn:hover {
+            background-color: #d48d00;
+        }
+    </style>
+</head>
+<body>
+    <div class="sky">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+    </div>
+    <div class="content">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emoji_u2600.svg/1200px-Emoji_u2600.svg.png" class="logo" alt="Логотип СПК">
+        <h1>СПК «Хорошово-1»</h1>
+        <p>Путь к устойчивому развитию — создаем уют с любовью к земле и людям</p>
+        <button class="enter-btn">Перейти на сайт</button>
+    </div>
+</body>
+</html>
