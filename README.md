@@ -732,4 +732,161 @@ app.post('/api/contact', express.json(), async (req, res) => {
     console.error('Ошибка при отправке:', error);
     res.status(500).json({ error: 'Ошибка при отправке письма' });
   }
-}); 
+}); <!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Голосование — СПК «Хорошово-1»</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h1 { margin-bottom: 10px; }
+    .option {
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Поддерживаете ли вы установку видеонаблюдения?</h1>
+  <form id="vote-form">
+    <div class="option">
+      <input type="radio" name="vote" value="yes" id="yes" required>
+      <label for="yes">Да</label>
+    </div>
+    <div class="option">
+      <input type="radio" name="vote" value="no" id="no">
+      <label for="no">Нет</label>
+    </div>
+    <button type="submit">Проголосовать</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('vote-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const vote = form.vote.value;
+      const res = await fetch('/api/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vote })
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = data.message;
+      form.reset();
+    });
+  </script>
+</body>
+</html> const fs = require('fs');
+const voteFile = './votes.json';
+
+// Инициализируем файл, если не существует
+if (!fs.existsSync(voteFile)) {
+  fs.writeFileSync(voteFile, JSON.stringify({ yes: 0, no: 0 }));
+}
+
+app.post('/api/vote', express.json(), (req, res) => {
+  const { vote } = req.body;
+  if (!['yes', 'no'].includes(vote)) {
+    return res.status(400).json({ message: 'Недопустимый голос' });
+  }
+
+  const votes = JSON.parse(fs.readFileSync(voteFile));
+  votes[vote]++;
+  fs.writeFileSync(voteFile, JSON.stringify(votes));
+
+  res.json({ message: 'Спасибо, ваш голос учтён!' });
+}); <!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Результаты голосования</title>
+</head>
+<body>
+  <h1>Результаты голосования</h1>
+  <div id="results"></div>
+
+  <script>
+    fetch('/votes.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('results').innerHTML =
+          `<p>Да: ${data.yes}</p><p>Нет: ${data.no}</p>`;
+      });
+  </script>
+</body>
+</html> public/
+├── docs/
+│   ├── ustav.pdf
+│   ├── protokol-2024-05-01.pdf
+│   └── otchet-audita.pdf <!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Документы СПК «Хорошово-1»</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h1 { margin-bottom: 10px; }
+    ul { list-style: none; padding-left: 0; }
+    li { margin-bottom: 10px; }
+    a { color: #0077cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Официальные документы</h1>
+  <ul>
+    <li><a href="/docs/ustav.pdf" target="_blank">Устав СПК «Хорошово-1» (PDF)</a></li>
+    <li><a href="/docs/protokol-2024-05-01.pdf" target="_blank">Протокол общего собрания от 1 мая 2024</a></li>
+    <li><a href="/docs/otchet-audita.pdf" target="_blank">Отчет аудитора за 2024 г.</a></li>
+  </ul>
+</body>
+</html> 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Карта сайта — СПК «Хорошово-1»</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+    h1 { margin-bottom: 10px; }
+    ul { padding-left: 20px; }
+    a { color: #0077cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Карта сайта</h1>
+  <ul>
+    <li><a href="/index.html">Главная</a></li>
+    <li><a href="/gallery.html">Фотогалерея</a></li>
+    <li><a href="/docs.html">Документы</a></li>
+    <li><a href="/vote.html">Голосование</a></li>
+    <li><a href="/contact.html">Обратная связь</a></li>
+  </ul>
+</body>
+</html> <p><a href="/sitemap.html">Карта сайта</a></p> <footer style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px;">
+  <p>Мы в соцсетях:</p>
+  <a href="https://vk.com/club228905465" target="_blank">ВКонтакте</a> |
+  <a href="mailto:spk@example.com">E-mail</a>
+</footer> <footer style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px;">
+  <p>Мы в соцсетях:</p>
+  <a href="https://vk.com/club228905465" target="_blank">ВКонтакте</a> |
+  <a href="https://t.me/SPK_Khoroshovo_Bot" target="_blank">@SPK_Khoroshovo_Bot</a> |
+  <a href="https://t.me/SPK_Khoroshovo_1" target="_blank">@SPK_Khoroshovo_1</a> |
+  <a href="mailto:spk@example.com">E-mail</a>
+</footer> <footer style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px;">
+  <p>Мы в соцсетях:</p>
+  <a href="https://vk.com/club228905465" target="_blank">ВКонтакте</a> |
+  <a href="https://t.me/SPK_Khoroshovo_Bot" target="_blank">@SPK_Khoroshovo_Bot</a> |
+  <a href="https://t.me/SPK_Khoroshovo_1" target="_blank">@SPK_Khoroshovo_1</a> |
+  <a href="mailto:spk.horoshovo-1@yandex.ru">E-mail: spk.horoshovo-1@yandex.ru</a>
+  </footer> 
